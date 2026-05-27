@@ -25,14 +25,15 @@ class Plant:
             msg += f"{self._show_count} show"
             print(msg)
 
-    def create_stats(self) -> Statsdata:
-        return self.Statsdata(self)
+    # def create_stats(self) -> Statsdata:
+    #    return self.Statsdata(self)
 
     def __init__(self, name: str, height: float, age: int) -> None:
         self.name = name
         self._height = height
         self._age_ = age
-        self._stats = self.create_stats()
+        # self._stats = self.create_stats()
+        self._stats = self.Statsdata(self)
         self.show()
 
     def show(self) -> None:
@@ -102,15 +103,15 @@ class Tree(Plant):
         def count_shade(self) -> None:
             self._shade_count += 1
 
-    def create_stats(self) -> Treestatsdata:
-        return self.Treestatsdata(self)
+    # def create_stats(self) -> Treestatsdata:
+    #    return self.Treestatsdata(self)
 
     def __init__(self, name: str, height: float, age: int,
                  trunk_diameter: float) -> None:
         self._trunk_diameter = trunk_diameter
-        self._treestats = self.create_stats()
+        # self._treestats = self.create_stats()
+        self._treestats = self.Treestatsdata(self)
         super().__init__(name, height, age)
-        # self._stats = self.Treestatsdata(self)
 
     def produce_shade(self) -> None:
         self._treestats.count_shade()
