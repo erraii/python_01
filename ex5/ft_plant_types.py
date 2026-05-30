@@ -8,7 +8,6 @@ class Plant:
         self._age_ = age
         self._growth = growth
         # print("Plant Created:", end=" ")
-        self.show()
 
     def show(self) -> None:
         message = f"{self.name}: {round(self._height, 1)}cm"
@@ -25,10 +24,9 @@ class Plant:
 class Flower(Plant):
     def __init__(self, name: str, height: float, age: int, growth: float,
                  color: str) -> None:
-        print("=== Flower")
+        super().__init__(name, height, age, growth)
         self._color = color
         self._bloom_ = False
-        super().__init__(name, height, age, growth)
 
     def bloom(self) -> None:
         print(f"[asking the {self.name.lower()} to bloom]")
@@ -46,9 +44,8 @@ class Flower(Plant):
 class Tree(Plant):
     def __init__(self, name: str, height: float, age: int, growth: float,
                  trunk_diameter: float) -> None:
-        print("=== Tree")
-        self._trunk_diameter = trunk_diameter
         super().__init__(name, height, age, growth)
+        self._trunk_diameter = trunk_diameter
 
     def produce_shade(self) -> None:
         print(f"[asking the {self.name.lower()} to produce shade]")
@@ -64,10 +61,9 @@ class Tree(Plant):
 class Vegetable(Plant):
     def __init__(self, name: str, height: float, age: int, growth: float,
                  harvest_season: str, nutritional_value: int) -> None:
-        print("=== Vegetable")
+        super().__init__(name, height, age, growth)
         self._harvest_season = harvest_season
         self._nutritional_value = nutritional_value
-        super().__init__(name, height, age, growth)
 
     def show(self) -> None:
         super().show()
@@ -84,14 +80,20 @@ class Vegetable(Plant):
 
 if __name__ == "__main__":
     print("=== Garden Plant Types ===")
+    print("=== Flower")
     rose = Flower("Rose", 15.0, 10, 0.8, "red")
+    rose.show()
     rose.bloom()
     rose.show()
     print("")
+    print("=== Tree")
     oak = Tree("Oak", 200.0, 365, 0.2, 5.0)
+    oak.show()
     oak.produce_shade()
     print("")
+    print("=== Vegetable")
     tomato = Vegetable("Tomato", 5.0, 10, 2.1, "April", 0)
+    tomato.show()
     days = 20
     print(f"[make {tomato.name.lower()} grow and age for {days} days]")
     for i in range(days):
