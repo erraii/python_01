@@ -4,6 +4,7 @@ class Plant:
 
     class Statsdata:
         # stats for the class
+
         def __init__(self, plant: "Plant") -> None:
             self._plant = plant
             self._grow_count = 0
@@ -34,7 +35,6 @@ class Plant:
         self._age_ = age
         # self._stats = self.create_stats()
         self._stats = self.Statsdata(self)
-        self.show()
 
     def show(self) -> None:
         self._stats.count_show()
@@ -81,10 +81,10 @@ class Flower(Plant):
 class Seed(Flower):
     def __init__(self, name: str, height: float, age: int,
                  color: str, bloom_seeds: int) -> None:
+        super().__init__(name, height, age, color)
         self._seeds = 0
         self._bloom_seeds = bloom_seeds
         self._bloom_ = False
-        super().__init__(name, height, age, color)
 
     def show(self) -> None:
         super().show()
@@ -103,18 +103,23 @@ class Tree(Plant):
         def count_shade(self) -> None:
             self._shade_count += 1
 
+        def display(self) -> None:
+            super().display()
+            print(f" {self._shade_count} shade")
+
     # def create_stats(self) -> Treestatsdata:
     #    return self.Treestatsdata(self)
 
     def __init__(self, name: str, height: float, age: int,
                  trunk_diameter: float) -> None:
+        super().__init__(name, height, age)
+        self._stats = self.Treestatsdata(self)
         self._trunk_diameter = trunk_diameter
         # self._treestats = self.create_stats()
-        self._treestats = self.Treestatsdata(self)
-        super().__init__(name, height, age)
 
     def produce_shade(self) -> None:
-        self._treestats.count_shade()
+        if isinstance(self._stats, self.Treestatsdata):
+            self._stats.count_shade()
         print(f"[asking the {self.name.lower()} to produce shade]")
         msg = f"Tree {self.name} now produces a shade of {self._height}"
         msg += f"cm long and {self._trunk_diameter}cm wide"
@@ -150,8 +155,8 @@ class Vegetable(Plant):
 
 def show_stats(plant: Plant) -> None:
     plant._stats.display()
-    if isinstance(plant, Tree):
-        print(f" {plant._treestats._shade_count} shade")
+    # if isinstance(plant, Tree):
+    #    print(f" {plant._treestats._shade_count} shade")
 
 
 if __name__ == "__main__":
@@ -161,6 +166,7 @@ if __name__ == "__main__":
     Plant.check_year(400)
     print("\n=== Flower")
     rose = Flower("Rose", 15.0, 10, "red")
+    rose.show()
     show_stats(rose)
     print("[asking the rose to grow and bloom]")
     rose.grow(8.0)
@@ -169,11 +175,13 @@ if __name__ == "__main__":
     show_stats(rose)
     print("\n=== Tree")
     oak = Tree("Oak", 200.0, 365, 5.0)
+    oak.show()
     show_stats(oak)
     oak.produce_shade()
     show_stats(oak)
     print("\n=== Seed")
     sunflower = Seed("Sunflower", 80.0, 45, "yellow", 42)
+    sunflower.show()
     print("[make sunflower grow, age and bloom]")
     sunflower.grow(30.0)
     sunflower.age(20)
@@ -182,6 +190,7 @@ if __name__ == "__main__":
     show_stats(sunflower)
     print("\n=== Anonymous")
     anonymous = Plant.create_anonymous()
+    anonymous.show()
     show_stats(anonymous)
     # tomato = Vegetable("Tomato", 5.0, 10, 2.1, "April", 0)
     # tomato.age_and_grow(20)
